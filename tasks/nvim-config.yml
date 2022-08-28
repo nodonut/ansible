@@ -1,0 +1,6 @@
+- name: Install nvim-config
+  ansible.builtin.git:
+    repo: "https://github.com/nodonut/nvim-lua-config.git"
+    dest: "{{ lookup('env', 'HOME') }}/.config/nvim"
+  tags:
+    - dotfiles

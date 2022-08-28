@@ -1,0 +1,59 @@
+- name: Install ZSH
+  apt: name=zsh
+  tags:
+    - zsh
+
+- name: Change shell
+  shell: chsh -s `which zsh`
+  tags:
+    - zsh
+
+- name: Install oh my zsh
+  shell: curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
+  tags:
+    - zsh
+
+- name: Download JetBrainsMono font
+  shell: curl --remote-name -L https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
+  tags:
+    - zsh
+
+- name: Create .fonts dir
+  file:
+    path: ~/.fonts/JetBrainsMono
+    recurse: true
+    state: "directory"
+    mode: "0755"
+  tags:
+    - zsh
+
+- name: Extract JetBrainsMono font
+  shell: unzip JetBrainsMono.zip -d ~/.fonts/JetBrainsMono/
+  tags:
+    - zsh
+
+- name: Install powerlevel10k
+  ansible.builtin.git:
+    repo: "https://github.com/romkatv/powerlevel10k.git"
+    dest: "~/.oh-my-zsh/themes/powerlevel10k"
+  tags:
+    - zsh
+
+- name: Install the zsh plugin autosuggestions
+  ansible.builtin.git:
+    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+    dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
+  tags:
+    - zsh
+
+- name: Install the zsh plugin syntax-highlighting
+  ansible.builtin.git:
+    repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    dest: "~/.oh-my-zsh/plugins/zsh-syntax-highlighting"
+  tags:
+    - zsh
+
+- name: Update our zshrc
+  shell: sed -i 's/(git/(git zsh-autosuggestions zsh-syntax-highlighting/' ~/.zshrc
+  tags:
+    - zsh

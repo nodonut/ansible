@@ -1,0 +1,33 @@
+- name: Install node
+  apt:
+    name: ["nodejs", "npm"]
+  tags:
+    - node
+- name: Install n
+  npm:
+    name: n
+    global: true
+  tags:
+    - node
+- name: n lts
+  shell: n lts
+  tags:
+    - node
+- name: Install Yarn
+  npm:
+    name: yarn
+    global: yes
+  tags:
+    - node
+- name: Install eslint
+  npm:
+    name: eslint
+    global: yes
+  tags:
+    - node
+- name: Install prettier
+  npm:
+    name: prettier
+    global: yes
+  tags:
+    - node

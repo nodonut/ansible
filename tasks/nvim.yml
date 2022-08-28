@@ -1,0 +1,16 @@
+- name: Remove neovim
+  shell: rm -rf ~/neovim
+  tags:
+    - neovim
+- name: Get Packer
+  ansible.builtin.git:
+    repo: "https://github.com/wbthomason/packer.nvim"
+    dest: "{{ lookup('env', 'HOME') }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+  tags:
+    - neovim
+- name: Install neovim
+  become: true
+  apt:
+    name: neovim
+  tags:
+    - neovim

@@ -1,0 +1,19 @@
+- hosts: localhost
+  become: true
+  pre_tasks:
+    - name: Update cache
+      apt:
+        update_cache: true
+      tags:
+        - core
+        - node
+        - zsh
+        - neovim
+        - dotfiles
+  tasks:
+    - import_tasks: tasks/core.yml
+    - import_tasks: tasks/zsh.yml
+    - import_tasks: tasks/node.yml
+    - import_tasks: tasks/nvim.yml
+    - import_tasks: tasks/productivity-tools.yml
+    - import_tasks: tasks/nvim-config.yml
