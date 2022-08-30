@@ -20,7 +20,7 @@
 
 - name: Create .fonts dir
   file:
-    path: ~/.fonts/JetBrainsMono
+    path: "{{ lookup('env', 'HOME') }}/.fonts/JetBrainsMono"
     recurse: true
     state: "directory"
     mode: "0755"
@@ -28,32 +28,32 @@
     - zsh
 
 - name: Extract JetBrainsMono font
-  shell: unzip JetBrainsMono.zip -d ~/.fonts/JetBrainsMono/
+  shell: unzip JetBrainsMono.zip -d {{ lookup('env', 'HOME') }}/.fonts/JetBrainsMono/
   tags:
     - zsh
 
 - name: Install powerlevel10k
   ansible.builtin.git:
     repo: "https://github.com/romkatv/powerlevel10k.git"
-    dest: "~/.oh-my-zsh/themes/powerlevel10k"
+    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/themes/powerlevel10k"
   tags:
     - zsh
 
 - name: Install the zsh plugin autosuggestions
   ansible.builtin.git:
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
-    dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
+    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/plugins/zsh-autosuggestions"
   tags:
     - zsh
 
 - name: Install the zsh plugin syntax-highlighting
   ansible.builtin.git:
     repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
-    dest: "~/.oh-my-zsh/plugins/zsh-syntax-highlighting"
+    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/plugins/zsh-syntax-highlighting"
   tags:
     - zsh
 
 - name: Update our zshrc
-  shell: sed -i 's/(git/(git zsh-autosuggestions zsh-syntax-highlighting/' ~/.zshrc
+  shell: sed -i 's/(git/(git zsh-autosuggestions zsh-syntax-highlighting/' {{ lookup('env', 'HOME') }}/.zshrc
   tags:
     - zsh
